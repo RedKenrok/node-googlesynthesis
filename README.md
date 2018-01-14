@@ -1,5 +1,5 @@
 # Google synthesis
-Builds network request for [Google's translation](https://translate.google.com)'s speech synthesis API. Based of [Zlargon's 'google-tts'](https://github.com/zlargon/google-tts).
+Builds network request for [Google's translation](https://translate.google.com)'s speech synthesis API. Based of [Zlargon's 'google-tts'](https://github.com/zlargon/google-tts). To see which languages are supported see the [Google Cloud documentation](https://cloud.google.com/speech/docs/languages).
 
 ## Installation
 ```
