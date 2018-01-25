@@ -1,5 +1,5 @@
 # Google synthesis
-Builds network request for [Google's translation](https://translate.google.com)'s speech synthesis API. Based of [Zlargon's 'google-tts'](https://github.com/zlargon/google-tts). To see which languages are supported see the [Google Cloud documentation](https://cloud.google.com/speech/docs/languages).
+Builds network request for Google Speech API V1 or [Google's translation](https://translate.google.com)'s speech synthesis API. Based of [Zlargon's 'google-tts'](https://github.com/zlargon/google-tts).
 
 ## Installation
 ```
@@ -25,18 +25,30 @@ const googleSynthesis = new GoogleSynthesis(
 let urls = googleSynthesis.request('Hello world');
 ```
 
-> request() returns an array of urls since it only allows for a maximum of 200 characters per request.
+> Returns an array of urls since it only allows for a maximum of 500 characters per request.
+
+```javascript
+// Gets the url requests for getting the synthesized audio, using the translate API.
+let urls = googleSynthesis.requestTranslate('Hello world');
+```
+
+> Returns an array of urls since it only allows for a maximum of 200 characters per request.
+> To see which languages are supported see the [Google Cloud documentation](https://cloud.google.com/speech/docs/languages).
 
 Various extra methods you most likely won't have to deal with
 
 ```javascript
+// Slices transcript into sections.
+let slices = googleSynthesis.slice('Hello world!', 6);
+console.log(slices);
+
 // Gets a key from translate.google.com.
 googleSynthesis.key(function(key) {
   console.log(key);
 });
-// Get a token directly form the text and key.
-let token = googleSynthesis.token('Hello world!', key);
 ```
+
+> Result of slices will be: ['Hello','world!']
 
 ### Events
 ```javascript
@@ -53,7 +65,7 @@ googleSynthesis.addEventListener('key', function(key) {
 
 ### Example
 
-The following example is used in electron so the Web Audio API is available. 
+The following example is made for electron so the Web Audio API is available. 
 
 ```javascript
 // Initialize module, see constructor section for more information.
@@ -66,7 +78,7 @@ const audio = new Audio();
 // After this event is called the service can be used.
 googleSynthesis.addEventListener('key', function(key) {
   // Get urls for the phrase 'Hello world!'.
-  let urls = googleSynthesis.speak('Hello world!');
+  let urls = googleSynthesis.request('Hello world!');
    
   // Setup listener so it cycles through playing each url.
   let index = 0;
@@ -89,4 +101,6 @@ googleSynthesis.addEventListener('key', function(key) {
 
 ## Troubleshooting
 
-If the module suddenly stops working it might be because Google changed the method of creating the required token for each request had changed.
+If the module suddenly stops working it might be because of several reasons
+* If you are using 'request()', you might have exceeded the maximum number of request to the speech API. You currently can't increase this limit.
+* If you are using 'requestTranslate()', Google changed the method of creating the required token for each request had changed.
