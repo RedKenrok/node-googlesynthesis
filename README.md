@@ -14,22 +14,32 @@ npm install --save googlesynthesis
 const GoogleSynthesis = require('googlesynthesis');
 // Create an instance.
 const googleSynthesis = new GoogleSynthesis(
-  true, // getKey whether to automaticly get a key.
-  console // Logger used for testing purposes.
+  console // Logger used for developing purposes, optional.
 );
 ```
 
 ### Methods
 ```javascript
 // Gets the url requests for getting the synthesized audio.
-let urls = googleSynthesis.request('Hello world');
+let urls = googleSynthesis.request(
+	'Hello world', // Text to be synthesised.
+	'en-GB', // Language code, default 'en-GB'.
+	'UK English Female', // Name of the voice to be used, default 'Uk English Female'.
+	0.5, // Pitch, default 0.5.
+	0.5, // Playback speed, default 0.5.
+	1 // Volume, default 1.
+	);
 ```
 
 > Returns an array of urls since it only allows for a maximum of 500 characters per request.
 
 ```javascript
 // Gets the url requests for getting the synthesized audio, using the translate API.
-let urls = googleSynthesis.requestTranslate('Hello world');
+let urls = googleSynthesis.requestTranslate(
+	'Hello world', // Text to be synthesised.
+	'en-GB', // Language code, default 'en-GB'.
+	'1' // Playback speed, default 1.
+	);
 ```
 
 > Returns an array of urls since it only allows for a maximum of 200 characters per request.
@@ -39,7 +49,7 @@ Various extra methods you most likely won't have to deal with
 
 ```javascript
 // Slices transcript into sections.
-let slices = googleSynthesis.slice('Hello world!', 6);
+let slices = googleSynthesis.slice('Hello world', 8);
 console.log(slices);
 
 // Gets a key from translate.google.com.

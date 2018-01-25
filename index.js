@@ -124,12 +124,13 @@ class GoogleSynthesis extends require('events').EventEmitter {
 	}
 	/**
 	 * Use the Google Web Speech API V1.
+	 * Returns an array of URLs pointing to addresses where the synthesised transcript can be retrieved from.
 	 * @param {*} transcript Text to be synthesised.
 	 * @param {*} language Language code, default 'en-GB'.
 	 * @param {*} voice Name of the voice to be used, default 'Uk English Female'.
 	 * @param {*} pitch Pitch, default 0.5.
 	 * @param {*} speed Playback speed, default 0.5.
-	 * @param {*} volume Volume default 1.
+	 * @param {*} volume Volume, default 1.
 	 */
 	request(transcript, language = 'en-GB', voice = 'UK English Female', pitch = 0.5, speed = 0.5, volume = 1) {
 		// Split transcript up.
@@ -155,7 +156,7 @@ class GoogleSynthesis extends require('events').EventEmitter {
 		return urls;
 	}
 	/**
-	 * Use the Google Translate's text to speech API with a token.
+	 * Use the Google Translate's text to speech API.
 	 * Returns an array of URLs pointing to addresses where the synthesised transcript can be retrieved from.
 	 * @param {*} transcript Text to be synthesised.
 	 * @param {*} language Language code, default 'en-GB'.
