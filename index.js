@@ -127,30 +127,39 @@ class GoogleSynthesis extends require('events').EventEmitter {
 	 * Returns an array of URLs pointing to addresses where the synthesised transcript can be retrieved from.
 	 * @param {*} transcript Text to be synthesised.
 	 * @param {*} language Language code, default 'en-GB'.
-	 * @param {*} voice Name of the voice to be used, default 'Uk English Female'.
-	 * @param {*} pitch Pitch, default 0.5.
-	 * @param {*} speed Playback speed, default 0.5.
-	 * @param {*} volume Volume, default 1.
+	 * @param {*} voice Name of the voice to be used, default 'Uk English Female', optional.
+	 * @param {*} pitch Pitch, default 0.5, optional.
+	 * @param {*} speed Playback speed, default 0.5, optional.
+	 * @param {*} volume Volume, default 1, optional.
 	 */
-	request(transcript, language = 'en-GB', voice = 'UK English Female', pitch = 0.5, speed = 0.5, volume = 1) {
+	request(transcript, language = 'en-GB', voice, pitch, speed, volume) {
 		// Split transcript up.
 		let transcriptSlices = this.slice(transcript, 500);
 		// Url queries.
 		let urls = [];
+		let query;
 		for(let i = 0; i < transcriptSlices.length; i++) {
 			transcript = transcriptSlices[i];
+			// Build query.
+			query = {
+				ie: 'UTF-8',
+				lang: language,
+				text: transcript
+			}
+			if (voice !== undefined && voice !== null) {
+				query.voice = voice;
+			}
+			if (pitch !== undefined && pitch !== null) {
+				query.pitch = pitch;
+			}
+			if (speed !== undefined && speed !== null) {
+				query.speed = speed;
+			}
+			if (volume !== undefined && volume !== null) {
+				query.volume = volume;
+			}
 			// Build and add url to list.
-			urls.push(host + url.format({
-				query: {
-					ie: 'UTF-8',
-					lang: language,
-					voice: voice,
-					pitch: pitch,
-					speed: speed,
-					vol: volume,
-					text: transcript
-				}
-			}));
+			urls.push(host + url.format({ query: query }));
 		}
 		// Return urls.
 		return urls;
