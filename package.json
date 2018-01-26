@@ -1,7 +1,7 @@
 {
 	"name": "googlesynthesis",
 	"productName": "Google synthesis",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Constructs urls for Google's translation text to speech API.",
 	"keywords": [
 		"google",
